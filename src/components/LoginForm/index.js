@@ -22,6 +22,8 @@ export const LoginForm = () => {
 				setPassword('');
 			} catch (err) {
 				console.log(err.message);
+				setEmail('');
+				setPassword('');
 			}
 		}
 	}

@@ -6,10 +6,12 @@ import {
 	Redirect
 } from 'react-router-dom';
 import { Landing } from './containers/Landing';
+import { Navbar } from './components/Navbar';
 
 function App() {
 	return (
 		<Router>
+			<Navbar />
 			<Switch>
 				<Route exact path = "/" component={Landing} />
 				<Redirect to="/" />
