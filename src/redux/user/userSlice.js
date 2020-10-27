@@ -3,15 +3,15 @@ import {
 	createAsyncThunk
 } from '@reduxjs/toolkit';
 
-import client from '../../api';
+import axios from '../../api';
 
-export const loginUser = createAsyncThunk('user/loginUser', async (email, password) => {
-	const response = await client.post('/login', {
+export const loginUser = createAsyncThunk('user/loginUser', async ({ email, password}) => {
+	const response = await axios.post('/login', {
 		email,
 		password
 	});
 	return {
-		token: response.token,
+		token: response.data.token,
 		email
 	}
 });
