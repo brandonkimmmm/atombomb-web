@@ -9,7 +9,10 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button';
+import MaterialUiLink from '@material-ui/core/Link';
 import { getUser, logoutUser } from '../../redux/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
 	const classes = useStyles();
@@ -39,38 +42,45 @@ export const Navbar = () => {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
-						Photos
+						<MaterialUiLink color="inherit" underline="none" component={Link} to="/">
+							Atom Bomb
+						</MaterialUiLink>
 					</Typography>
-					{user.loggedIn && (
+					{user.loggedIn ? (
 						<div>
-						<IconButton
-							aria-label="account of current user"
-							aria-controls="menu-appbar"
-							aria-haspopup="true"
-							onClick={handleMenu}
-							color="inherit"
-						>
-							<AccountCircle />
-						</IconButton>
-						<Menu
-							id="menu-appbar"
-							anchorEl={anchorEl}
-							anchorOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							keepMounted
-							transformOrigin={{
-								vertical: 'top',
-								horizontal: 'right',
-							}}
-							open={open}
-							onClose={handleClose}
-						>
-							<MenuItem onClick={handleClose}>Profile</MenuItem>
-							<MenuItem onClick={handleClose}>My account</MenuItem>
-							<MenuItem onClick={handleLogout}>Logout</MenuItem>
-						</Menu>
+							<IconButton
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleMenu}
+								color="inherit"
+							>
+								<AccountCircle />
+							</IconButton>
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorEl}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								open={open}
+								onClose={handleClose}
+							>
+								<MenuItem onClick={handleClose}>Profile</MenuItem>
+								<MenuItem onClick={handleClose}>My account</MenuItem>
+								<MenuItem onClick={handleLogout}>Logout</MenuItem>
+							</Menu>
+						</div>
+					) : (
+						<div>
+							<Button color="inherit" component={Link} to="/login">Login</Button>
+							<Button color="inherit" component={Link} to="/signup">Signup</Button>
 						</div>
 					)}
 				</Toolbar>
