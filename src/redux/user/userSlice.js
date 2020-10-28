@@ -16,6 +16,13 @@ export const loginUser = createAsyncThunk('user/loginUser', async ({ email, pass
 	}
 });
 
+export const signupUser = createAsyncThunk('user/signupUser', ({ email, password}) => {
+	return axios.post('signup', {
+		email,
+		password
+	});
+})
+
 const initialState = {
 	loggedIn: false,
 	token: '',
@@ -30,6 +37,7 @@ const userSlice = createSlice({
 			state.loggedIn = false;
 			state.email = '';
 			state.password = '';
+			state.token = '';
 		}
 	},
 	extraReducers: {

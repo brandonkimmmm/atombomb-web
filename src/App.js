@@ -8,6 +8,7 @@ import {
 import { Landing } from './containers/Landing';
 import { Navbar } from './components/Navbar';
 import { LoginForm } from './components/LoginForm';
+import { SignupForm } from './components/SignupForm';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 			<Switch>
 				<Route exact path="/" component={Landing} />
 				<Route exact path="/login" component={LoginForm} />
+				<Route exact path="/signup" component={SignupForm} />
 				<Redirect to="/" />
 			</Switch>
 		</Router>

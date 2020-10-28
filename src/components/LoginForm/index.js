@@ -37,6 +37,7 @@ export const LoginForm = () => {
 				unwrapResult(result);
 				setEmail('');
 				setPassword('');
+				// alert
 				<Redirect to='/' />
 			} catch (err) {
 				console.log(err.message);
@@ -100,6 +101,7 @@ export const LoginForm = () => {
 									color="primary"
 									className={classes.submit}
 									onClick={onLoginClicked}
+									disabled={!canLogin}
 								>
 									Sign In
 								</Button>
