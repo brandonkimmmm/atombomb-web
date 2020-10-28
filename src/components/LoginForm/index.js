@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
+import { useHistory } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 export const LoginForm = () => {
@@ -24,6 +25,7 @@ export const LoginForm = () => {
 	const [ password, setPassword ] = useState('');
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
@@ -38,7 +40,7 @@ export const LoginForm = () => {
 				setEmail('');
 				setPassword('');
 				// alert
-				<Redirect to='/' />
+				history.push('/');
 			} catch (err) {
 				console.log(err.message);
 				setEmail('');
@@ -49,7 +51,7 @@ export const LoginForm = () => {
 
 	const renderedForm = () => {
 		if (user.loggedIn) {
-			return <Redirect to='/' />
+			return <Redirect to="/" />
 		} else {
 			return (
 				<Grid container component="main" className={classes.root}>

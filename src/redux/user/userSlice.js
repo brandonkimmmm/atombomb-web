@@ -16,11 +16,12 @@ export const loginUser = createAsyncThunk('user/loginUser', async ({ email, pass
 	}
 });
 
-export const signupUser = createAsyncThunk('user/signupUser', ({ email, password}) => {
-	return axios.post('signup', {
+export const signupUser = createAsyncThunk('user/signupUser', async ({ email, password }) => {
+	await axios.post('/signup', {
 		email,
 		password
 	});
+	return;
 })
 
 const initialState = {

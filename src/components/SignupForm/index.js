@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { signupUser, getUser } from '../../redux/user/userSlice';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,6 +14,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
+import { Redirect } from 'react-router-dom';
 
 export const SignupForm = () => {
 	const classes = useStyles();
@@ -24,6 +25,7 @@ export const SignupForm = () => {
 	const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
@@ -31,7 +33,7 @@ export const SignupForm = () => {
 
 	const canSignup =[ email, password, passwordConfirmation ].every(Boolean);
 
-	const onSingupClicked = async (e) => {
+	const onSignupClicked = async (e) => {
 		e.preventDefault();
 		if (canSignup) {
 			try {
@@ -44,7 +46,7 @@ export const SignupForm = () => {
 					setPassword('');
 					setPasswordConfirmation('');
 					//alert email sent
-					<Redirect to="/" />
+					history.push('/');
 				}
 			} catch (err) {
 				console.log(err.message);
@@ -119,7 +121,7 @@ export const SignupForm = () => {
 								variant="contained"
 								color="primary"
 								className={classes.submit}
-								onClick={onSingupClicked}
+								onClick={onSignupClicked}
 								disabled={!canSignup}
 							>
 								Sign Up
