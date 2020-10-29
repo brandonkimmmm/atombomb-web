@@ -24,7 +24,7 @@ export const LoginForm = () => {
 	const user = useSelector(getUser);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const [ alert, setAlert ] = useState({ message: '', open: false});
+	const [ alert, setAlert ] = useState({ message: '', severity: '', open: false });
 
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -34,9 +34,10 @@ export const LoginForm = () => {
 	const onAlertClose = e => {
 		setAlert({
 			message: '',
+			severity: '',
 			open: false
 		});
-	}
+	};
 	const canLogin = [ email, password ].every(Boolean);
 
 	const onLoginClicked = async (e) => {
@@ -51,6 +52,7 @@ export const LoginForm = () => {
 			} catch (err) {
 				setAlert({
 					message: err.message,
+					severity: 'error',
 					open: true
 				});
 				setEmail('');
@@ -138,12 +140,12 @@ export const LoginForm = () => {
 	}
 	return (
 		<Fragment>
-			{<AlertComponent
+			<AlertComponent
 				message={alert.message}
-				severity="error"
+				severity={alert.severity}
 				alertOpen={alert.open}
 				onAlertClose={onAlertClose}
-			/>}
+			/>
 			{renderedForm()}
 		</Fragment>
 	)
