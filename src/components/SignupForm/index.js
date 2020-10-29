@@ -41,7 +41,7 @@ export const SignupForm = () => {
 		});
 	};
 
-	const canSignup =[ email, password, passwordConfirmation ].every(Boolean);
+	const canSignup = [ email, password, passwordConfirmation ].every(Boolean);
 
 	const onSignupClicked = async (e) => {
 		e.preventDefault();
@@ -55,7 +55,15 @@ export const SignupForm = () => {
 					setEmail('');
 					setPassword('');
 					setPasswordConfirmation('');
-					history.push('/');
+					const alertProps = {
+						message: 'A verification code has been set to your email',
+						severity: 'success',
+						open: true
+					}
+					history.push({
+						pathname: '/',
+						state: { alertProps }
+					});
 				}
 			} catch (err) {
 				setAlert({
@@ -155,12 +163,12 @@ export const SignupForm = () => {
 
 	return (
 		<Fragment>
-			<AlertComponent
+			{alert.open && <AlertComponent
 				message={alert.message}
 				severity={alert.severity}
 				alertOpen={alert.open}
 				onAlertClose={onAlertClose}
-			/>
+			/>}
 			{renderedForm()}
 		</Fragment>
 	)

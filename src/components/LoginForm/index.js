@@ -140,12 +140,12 @@ export const LoginForm = () => {
 	}
 	return (
 		<Fragment>
-			<AlertComponent
+			{alert.open && <AlertComponent
 				message={alert.message}
 				severity={alert.severity}
 				alertOpen={alert.open}
 				onAlertClose={onAlertClose}
-			/>
+			/>}
 			{renderedForm()}
 		</Fragment>
 	)
