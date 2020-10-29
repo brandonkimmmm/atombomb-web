@@ -85,6 +85,7 @@ export const Navbar = () => {
 					)}
 				</Toolbar>
 			</AppBar>
+			<div className={classes.offset} />
 		</div>
 	);
 }
