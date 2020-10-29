@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { loginUser, getUser } from '../../redux/user/userSlice';
@@ -8,14 +8,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+import MaterialUILink from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { useStyles } from './styles';
 import { useHistory } from 'react-router';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { AlertComponent } from '../AlertComponent';
 
 export const LoginForm = () => {
 	const classes = useStyles();
@@ -23,12 +24,19 @@ export const LoginForm = () => {
 	const user = useSelector(getUser);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const [ alert, setAlert ] = useState({ message: '', open: false});
 
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
+	const onAlertClose = e => {
+		setAlert({
+			message: '',
+			open: false
+		});
+	}
 	const canLogin = [ email, password ].every(Boolean);
 
 	const onLoginClicked = async (e) => {
@@ -39,10 +47,12 @@ export const LoginForm = () => {
 				unwrapResult(result);
 				setEmail('');
 				setPassword('');
-				// alert
 				history.push('/');
 			} catch (err) {
-				console.log(err.message);
+				setAlert({
+					message: err.message,
+					open: true
+				});
 				setEmail('');
 				setPassword('');
 			}
@@ -109,14 +119,14 @@ export const LoginForm = () => {
 								</Button>
 								<Grid container>
 									<Grid item xs>
-										<Link href="#" variant="body2">
+										<MaterialUILink variant="body2">
 											Forgot password?
-										</Link>
+										</MaterialUILink>
 									</Grid>
 									<Grid item>
-										<Link href="#" variant="body2">
+										<MaterialUILink component={Link} to="/signup" variant="body2">
 											{"Don't have an account? Sign Up"}
-										</Link>
+										</MaterialUILink>
 									</Grid>
 								</Grid>
 							</form>
@@ -126,5 +136,15 @@ export const LoginForm = () => {
 			)
 		}
 	}
-	return renderedForm();
+	return (
+		<Fragment>
+			{<AlertComponent
+				message={alert.message}
+				severity="error"
+				alertOpen={alert.open}
+				onAlertClose={onAlertClose}
+			/>}
+			{renderedForm()}
+		</Fragment>
+	)
 };
