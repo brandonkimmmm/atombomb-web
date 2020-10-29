@@ -55,15 +55,7 @@ export const SignupForm = () => {
 					setEmail('');
 					setPassword('');
 					setPasswordConfirmation('');
-					const alertProps = {
-						message: 'A verification code has been set to your email',
-						severity: 'success',
-						open: true
-					}
-					history.push({
-						pathname: '/',
-						state: { alertProps }
-					});
+					history.push('/');
 				}
 			} catch (err) {
 				setAlert({
