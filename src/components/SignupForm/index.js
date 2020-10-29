@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { signupUser, getUser } from '../../redux/user/userSlice';
@@ -8,13 +8,14 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
+import MaterialUiLink from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { useStyles } from './styles';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+import { AlertComponent } from '../AlertComponent';
 
 export const SignupForm = () => {
 	const classes = useStyles();
@@ -23,6 +24,8 @@ export const SignupForm = () => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
+	const [ alert, setAlert ] = useState({ message: '', severity: '', open: false });
+
 
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -30,6 +33,13 @@ export const SignupForm = () => {
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
 	const onPasswordConfiratiomChanged = e => setPasswordConfirmation(e.target.value);
+	const onAlertClose = e => {
+		setAlert({
+			message: '',
+			severity: '',
+			open: false
+		});
+	};
 
 	const canSignup =[ email, password, passwordConfirmation ].every(Boolean);
 
@@ -45,11 +55,14 @@ export const SignupForm = () => {
 					setEmail('');
 					setPassword('');
 					setPasswordConfirmation('');
-					//alert email sent
 					history.push('/');
 				}
 			} catch (err) {
-				console.log(err.message);
+				setAlert({
+					message: err.message,
+					severity: 'error',
+					open: true
+				});
 				setEmail('');
 				setPassword('');
 				setPasswordConfirmation('');
@@ -57,7 +70,7 @@ export const SignupForm = () => {
 		}
 	}
 
-	const renderedFrom = () => {
+	const renderedForm = () => {
 		if (user.loggedIn) {
 			return <Redirect to="/" />
 		} else {
@@ -128,9 +141,9 @@ export const SignupForm = () => {
 							</Button>
 							<Grid container justify="flex-end">
 								<Grid item>
-								<Link href="/login" variant="body2">
-									Already have an account? Log in
-								</Link>
+									<MaterialUiLink component={Link} to="/login" variant="body2">
+										Already have an account? Log in
+									</MaterialUiLink>
 								</Grid>
 							</Grid>
 						</form>
@@ -140,5 +153,15 @@ export const SignupForm = () => {
 		}
 	}
 
-	return renderedFrom();
+	return (
+		<Fragment>
+			<AlertComponent
+				message={alert.message}
+				severity={alert.severity}
+				alertOpen={alert.open}
+				onAlertClose={onAlertClose}
+			/>
+			{renderedForm()}
+		</Fragment>
+	)
 }
