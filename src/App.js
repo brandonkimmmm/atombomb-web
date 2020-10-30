@@ -9,6 +9,7 @@ import { Landing } from './containers/Landing';
 import { Navbar } from './components/Navbar';
 import { LoginForm } from './components/LoginForm';
 import { SignupForm } from './components/SignupForm';
+import { SignupComplete } from './components/SignupComplete';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route exact path="/" component={Landing} />
 				<Route exact path="/login" component={LoginForm} />
 				<Route exact path="/signup" component={SignupForm} />
+				<Route exact path="/signup/complete" component={SignupComplete} />
 				<Redirect to="/" />
 			</Switch>
 		</Router>
