@@ -5,11 +5,12 @@ export const useStyles = makeStyles((theme) => ({
 		height: "90vh"
 	},
 	innerGrid: {
-		margin: 300
+		margin: 400
 	},
 	card: {
 		minWidth: 275,
-		paddingTop: 100,
+		paddingTop: 50,
+		paddingBottom: 50,
 		textAlign: "center",
 		height: "100%",
 		color: theme.palette.text.secondary
@@ -18,6 +19,6 @@ export const useStyles = makeStyles((theme) => ({
 		marginBottom: 50
 	},
 	body: {
-		marginBottom: 25
+		marginBottom: 40
 	}
 }));

@@ -55,7 +55,7 @@ export const SignupForm = () => {
 					setEmail('');
 					setPassword('');
 					setPasswordConfirmation('');
-					history.push('/');
+					history.push('/signup/complete');
 				}
 			} catch (err) {
 				setAlert({
