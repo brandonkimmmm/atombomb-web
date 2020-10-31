@@ -10,6 +10,7 @@ import { Navbar } from './components/Navbar';
 import { LoginForm } from './components/LoginForm';
 import { SignupForm } from './components/SignupForm';
 import { SignupComplete } from './components/SignupComplete';
+import { Footer } from './components/Footer';
 
 function App() {
 	return (
@@ -22,6 +23,7 @@ function App() {
 				<Route exact path="/signup/complete" component={SignupComplete} />
 				<Redirect to="/" />
 			</Switch>
+			<Footer />
 		</Router>
 	);
 }
