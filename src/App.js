@@ -23,7 +23,7 @@ function App() {
 				<Route exact path="/signup/complete" component={SignupComplete} />
 				<Redirect to="/" />
 			</Switch>
-			<Footer />
+			{/* <Footer /> */}
 		</Router>
 	);
 }
