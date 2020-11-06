@@ -22,12 +22,12 @@ export const LandingHero = () => {
 					<Grid container spacing={2} justify="center">
 						<Grid item>
 							<Button variant="contained" color="primary">
-							Main call to action
+								Main call to action
 							</Button>
 						</Grid>
 						<Grid item>
 							<Button variant="outlined" color="primary">
-								Secondary action
+								Secondary actions
 							</Button>
 						</Grid>
 					</Grid>
