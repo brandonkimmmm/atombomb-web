@@ -11,6 +11,7 @@ import { LoginForm } from './components/LoginForm';
 import { SignupForm } from './components/SignupForm';
 import { SignupComplete } from './components/SignupComplete';
 import { Footer } from './components/Footer';
+import { Dashboard } from './containers/Dashboard';
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 			<Navbar />
 			<Switch>
 				<Route exact path="/" component={Landing} />
+				<Route exact path="/dashboard" component={Dashboard} />
 				<Route exact path="/login" component={LoginForm} />
 				<Route exact path="/signup" component={SignupForm} />
 				<Route exact path="/signup/complete" component={SignupComplete} />

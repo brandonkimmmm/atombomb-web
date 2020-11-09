@@ -12,7 +12,7 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import MaterialUiLink from '@material-ui/core/Link';
 import { getUser, logoutUser } from '../../redux/user/userSlice';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export const Navbar = () => {
 	const classes = useStyles();
@@ -21,6 +21,7 @@ export const Navbar = () => {
 
 	const user = useSelector(getUser);
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const handleMenu = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -32,6 +33,7 @@ export const Navbar = () => {
 
 	const handleLogout = () => {
 		dispatch(logoutUser());
+		history.push('/');
 	}
 
 	return (
