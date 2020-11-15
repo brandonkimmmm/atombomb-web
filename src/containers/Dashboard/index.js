@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { getUser } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 
+// import Bar from '../../components/Sidebar';
+
 export const Dashboard = () => {
 	const user = useSelector(getUser);
 
@@ -13,13 +15,12 @@ export const Dashboard = () => {
 		} else {
 			return (
 				<Fragment>
-					<CssBaseline />
-						<main>
-							Herro
-						</main>
+				hi
+					{/* <Bar /> */}
 				</Fragment>
 			)
 		}
 	}
+
 	return renderedPage();
 }

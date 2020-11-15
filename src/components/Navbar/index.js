@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useStyles } from './styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,12 +13,26 @@ import Button from '@material-ui/core/Button';
 import MaterialUiLink from '@material-ui/core/Link';
 import { getUser, logoutUser } from '../../redux/user/userSlice';
 import { Link, useHistory } from 'react-router-dom';
+import { useTheme } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
+import { CssBaseline } from '@material-ui/core';
 
-export const Navbar = () => {
+export const Navbar = (props) => {
+	const { window } = props;
 	const classes = useStyles();
 	const [anchorEl, setAnchorEl] = useState(null);
+	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const open = Boolean(anchorEl);
 
+	const theme = useTheme();
 	const user = useSelector(getUser);
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -36,9 +50,39 @@ export const Navbar = () => {
 		history.push('/');
 	}
 
+	const handleDrawerToggle = () => {
+		setMobileOpen(!mobileOpen);
+	};
+
+	const drawer = (
+		<div>
+			<div className={classes.toolbar} />
+			<Divider />
+			<List>
+				{['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+					<ListItem button key={text}>
+						<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+						<ListItemText primary={text} />
+					</ListItem>
+				))}
+			</List>
+			<Divider />
+			<List>
+				{['All mail', 'Trash', 'Spam'].map((text, index) => (
+					<ListItem button key={text}>
+						<ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+						<ListItemText primary={text} />
+					</ListItem>
+				))}
+			</List>
+		</div>
+	);
+
+	const container = window !== undefined ? () => window().document.body : undefined;
+
 	return (
-		<div className={classes.root}>
-			<AppBar position="fixed">
+		<Fragment>
+			<AppBar position="fixed" className={classes.root}>
 				<Toolbar>
 					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
 						<MenuIcon />
@@ -87,7 +131,36 @@ export const Navbar = () => {
 					)}
 				</Toolbar>
 			</AppBar>
-			<div className={classes.offset} />
-		</div>
+			<nav className={classes.drawer} aria-label="mailbox folders">
+				<Hidden smUp implementation="css">
+					<Drawer
+						container={container}
+						variant="temporary"
+						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+						open={mobileOpen}
+						onClose={handleDrawerToggle}
+						classes={{
+							paper: classes.drawerPaper,
+						}}
+						ModalProps={{
+							keepMounted: true, // Better open performance on mobile.
+						}}
+					>
+						{drawer}
+					</Drawer>
+				</Hidden>
+				<Hidden xsDown implementation="css">
+					<Drawer
+						classes={{
+							paper: classes.drawerPaper,
+						}}
+						variant="permanent"
+						open
+					>
+						{drawer}
+					</Drawer>
+				</Hidden>
+			</nav>
+		</Fragment>
 	);
 }
