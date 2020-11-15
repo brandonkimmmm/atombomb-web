@@ -23,7 +23,6 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Hidden from '@material-ui/core/Hidden';
 import Drawer from '@material-ui/core/Drawer';
-import { CssBaseline } from '@material-ui/core';
 
 export const Navbar = (props) => {
 	const { window } = props;
