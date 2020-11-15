@@ -14,7 +14,6 @@ import { SignupForm } from './components/SignupForm';
 import { SignupComplete } from './components/SignupComplete';
 import { Footer } from './components/Footer';
 import { Dashboard } from './containers/Dashboard';
-import Sidebar from './components/Sidebar';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
