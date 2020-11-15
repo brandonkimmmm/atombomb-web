@@ -76,7 +76,44 @@ export const Navbar = (props) => {
 				))}
 			</List>
 		</div>
-	);
+	)
+
+	const renderedDrawer = () => {
+		if (user.loggedIn) {
+			return (
+				<nav className={classes.drawer} aria-label="mailbox folders">
+					<Hidden smUp implementation="css">
+						<Drawer
+							container={container}
+							variant="temporary"
+							anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+							open={user.loggedIn ? mobileOpen : false}
+							onClose={handleDrawerToggle}
+							classes={{
+								paper: classes.drawerPaper,
+							}}
+							ModalProps={{
+								keepMounted: true, // Better open performance on mobile.
+							}}
+						>
+							{drawer}
+						</Drawer>
+					</Hidden>
+					<Hidden xsDown implementation="css">
+						<Drawer
+							classes={{
+								paper: classes.drawerPaper,
+							}}
+							variant="permanent"
+							open
+						>
+							{drawer}
+						</Drawer>
+					</Hidden>
+				</nav>
+			)
+		}
+	}
 
 	const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -84,9 +121,17 @@ export const Navbar = (props) => {
 		<Fragment>
 			<AppBar position="fixed" className={classes.root}>
 				<Toolbar>
-					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-						<MenuIcon />
-					</IconButton>
+					{user.loggedIn &&
+						<IconButton
+							edge="start"
+							className={classes.menuButton}
+							color="inherit"
+							aria-label="menu"
+							onClick={handleDrawerToggle}
+						>
+							<MenuIcon />
+						</IconButton>
+					}
 					<Typography variant="h6" className={classes.title}>
 						<MaterialUiLink color="inherit" underline="none" component={Link} to="/">
 							Atom Bomb
@@ -100,6 +145,7 @@ export const Navbar = (props) => {
 								aria-haspopup="true"
 								onClick={handleMenu}
 								color="inherit"
+								className={classes.menuButton}
 							>
 								<AccountCircle />
 							</IconButton>
@@ -131,36 +177,7 @@ export const Navbar = (props) => {
 					)}
 				</Toolbar>
 			</AppBar>
-			<nav className={classes.drawer} aria-label="mailbox folders">
-				<Hidden smUp implementation="css">
-					<Drawer
-						container={container}
-						variant="temporary"
-						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-						open={mobileOpen}
-						onClose={handleDrawerToggle}
-						classes={{
-							paper: classes.drawerPaper,
-						}}
-						ModalProps={{
-							keepMounted: true, // Better open performance on mobile.
-						}}
-					>
-						{drawer}
-					</Drawer>
-				</Hidden>
-				<Hidden xsDown implementation="css">
-					<Drawer
-						classes={{
-							paper: classes.drawerPaper,
-						}}
-						variant="permanent"
-						open
-					>
-						{drawer}
-					</Drawer>
-				</Hidden>
-			</nav>
+			{renderedDrawer()}
 		</Fragment>
 	);
 }
