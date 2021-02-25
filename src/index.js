@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import { Provider } from 'react-redux';
 import store from './redux/store';
+import App from './App';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
 const persistor = persistStore(store);
