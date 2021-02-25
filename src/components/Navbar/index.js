@@ -4,7 +4,6 @@ import { getUser, logoutUser } from '../../redux/user/userSlice';
 import { Link, useHistory } from 'react-router-dom';
 
 export const Navbar = (props) => {
-	const { window } = props;
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const open = Boolean(anchorEl);
@@ -30,17 +29,26 @@ export const Navbar = (props) => {
 		setMobileOpen(!mobileOpen);
 	};
 
-	const redneredAppBar = () => {
-		return (
-			<div>Hi</div>
-		)
-	}
-
-	const container = window !== undefined ? () => window().document.body : undefined;
-
 	return (
 		<Fragment>
-			{redneredAppBar()}
+			<nav className='relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg mb-3 bg-gray-400'>
+				<div className='container px-4 mx-auto flex flex-wrap items-center justiy-between'>
+					<div className='w-full relative flex justify-between'>
+						<a
+							className='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white'
+							href='#'
+						>
+							Atom Bomb
+						</a>
+						<button
+							className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none'
+							type='button'
+						>
+							Hi
+						</button>
+					</div>
+				</div>
+			</nav>
 		</Fragment>
 	);
 }
