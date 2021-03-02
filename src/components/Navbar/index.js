@@ -31,21 +31,19 @@ export const Navbar = (props) => {
 
 	return (
 		<Fragment>
-			<nav className='relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg mb-3 bg-gray-400'>
+			<nav className='relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg mb-3 bg-black'>
 				<div className='container px-4 mx-auto flex flex-wrap items-center justiy-between'>
-					<div className='w-full relative flex justify-between'>
+					<div className='w-full relative flex items-center justify-between'>
 						<a
-							className='text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-white'
+							className='text-lg font-bold leading-relaxed  uppercase text-white'
 							href='#'
 						>
 							Atom Bomb
 						</a>
-						<button
-							className='text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none'
-							type='button'
-						>
-							Hi
-						</button>
+						<div className='flex space-x-2 justify-between items-center'>
+							<button type='button' className='border rounded-md p-2 text-white'>Login</button>
+							<button type='button' className='border rounded-md p-2 text-white'>Signup</button>
+						</div>
 					</div>
 				</div>
 			</nav>
