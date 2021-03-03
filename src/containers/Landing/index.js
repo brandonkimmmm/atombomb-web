@@ -13,8 +13,8 @@ export const Landing = () => {
 		// } else {
 			return (
 				<Fragment>
-					<main className='flex flex-col'>
-						<div className='flex flex-row bg-black justify-between p-12 space-x-20 h-3/4'>
+					<main className='flex flex-col h-screen'>
+						<div className='flex flex-row bg-black justify-between p-12 space-x-20 h-2/3'>
 							<div className='flex flex-col justify-center w-1/2'>
 								<div className='text-7xl mb-6 font-extrabold text-white'>
 									Use peer pressure to your advantage
@@ -31,8 +31,22 @@ export const Landing = () => {
 							</div>
 							<img className='w-1/2' src='https://www.pinclipart.com/picdir/big/526-5260657_bomb-outline-black-and-white-clip-art-at.png' />
 						</div>
-						<div className='flex flex-row'>
-							Hello
+						<div className='flex flex-row space-x-10 p-10'>
+							<div className='flex flex-col border-4 border-black rounded bg-yellow-200 px-4 py-10'>
+								<img className='rounded mb-8' src='https://cdn.cms-twdigitalassets.com/content/dam/business-twitter/solutions/twitter-ads-social-share.jpg.twimg.768.jpg' />
+								<div className='text-xl font-bold '>Connect</div>
+								<div className='text-lg font-light'>Connect your twitter account</div>
+							</div>
+							<div className='flex flex-col border-4 border-black rounded bg-yellow-200 px-4 py-10'>
+								<img className='rounded mb-8' src='https://cdn.cms-twdigitalassets.com/content/dam/business-twitter/solutions/twitter-ads-social-share.jpg.twimg.768.jpg' />
+								<div className='text-xl font-bold '>Create</div>
+								<div className='text-lg font-light'>Create a task to complete, set a deadline, and write a bomb message</div>
+							</div>
+							<div className='flex flex-col border-4 border-black rounded bg-yellow-200 px-4 py-10'>
+								<img className='rounded mb-8' src='https://cdn.cms-twdigitalassets.com/content/dam/business-twitter/solutions/twitter-ads-social-share.jpg.twimg.768.jpg' />
+								<div className='text-xl font-bold '>Complete</div>
+								<div className='text-lg font-light'>Complete your tasks or have your bomb message posted on twitter</div>
+							</div>
 						</div>
 						{/* <div className='flex flex-row'>
 							Hello
