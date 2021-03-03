@@ -31,7 +31,7 @@ export const Navbar = (props) => {
 
 	return (
 		<Fragment>
-			<nav className='relative flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-black'>
+			<nav className='fixed flex w-full flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-black'>
 				<div className='container px-4 mx-auto flex flex-wrap items-center justiy-between'>
 					<div className='w-full relative flex items-center justify-between'>
 						<a
