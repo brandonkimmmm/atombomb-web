@@ -13,7 +13,7 @@ export const Landing = () => {
 		// } else {
 			return (
 				<Fragment>
-					<main className='flex flex-col h-screen'>
+					<main className='flex flex-col h-screen pt-10'>
 						<div className='flex flex-row bg-black justify-between items-center p-12 space-x-20 h-2/3'>
 							<div className='flex flex-col justify-center w-1/2'>
 								<div className='text-7xl mb-6 font-extrabold text-white'>
