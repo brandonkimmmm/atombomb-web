@@ -30,6 +30,23 @@ export const Navbar = (props) => {
 		setMobileOpen(!mobileOpen);
 	};
 
+	const renderNavButtons = () => {
+		if (user.loggedIn) {
+			return (
+				<div className='flex space-x-2 justify-between items-center'>
+					<div onClick={handleLogout} className='border rounded-md p-2 text-white cursor-pointer'>Logout</div>
+				</div>
+			)
+		} else {
+			return (
+				<div className='flex space-x-2 justify-between items-center'>
+					<Link to='/login' className='border rounded-md p-2 text-white'>Login</Link>
+					<Link to='signup' className='border rounded-md p-2 text-white'>Signup</Link>
+				</div>
+			)
+		}
+	}
+
 	return (
 		<Fragment>
 			<nav className='fixed flex w-full flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-black'>
@@ -41,10 +58,7 @@ export const Navbar = (props) => {
 						>
 							Atom Bomb
 						</Link>
-						<div className='flex space-x-2 justify-between items-center'>
-							<Link to='/login' className='border rounded-md p-2 text-white'>Login</Link>
-							<Link to='signup' className='border rounded-md p-2 text-white'>Signup</Link>
-						</div>
+						{renderNavButtons()}
 					</div>
 				</div>
 			</nav>
