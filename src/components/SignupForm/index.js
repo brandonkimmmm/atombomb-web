@@ -16,7 +16,7 @@ export const SignupForm = () => {
 
 
 	const dispatch = useDispatch();
-	// const history = useHistory();
+	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
@@ -43,6 +43,7 @@ export const SignupForm = () => {
 					setEmail('');
 					setPassword('');
 					setPasswordConfirmation('');
+					history.push('/login');
 					// history.push('/signup/complete');
 				}
 			} catch (err) {

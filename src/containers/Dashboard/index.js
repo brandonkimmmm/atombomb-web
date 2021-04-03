@@ -11,8 +11,8 @@ export const Dashboard = () => {
 		// 	return <Redirect to="/" />
 		// } else {
 			return (
-				<Fragment>
-					<div className='pt-20 grid grid-rows-2 grid-flow-col gap-4 px-10'>
+				<main className='pt-8'>
+					<div className='grid grid-rows-2 grid-flow-col gap-4 px-10'>
 						<div className='row-span-1 col-span-1 flex flex-col bg-gray-200'>
 							<div>Account</div>
 							<div>Email: Brandon</div>
@@ -50,7 +50,7 @@ export const Dashboard = () => {
 							</tbody>
 						</table>
 					</div>
-				</Fragment>
+				</main>
 			)
 		// }
 	}

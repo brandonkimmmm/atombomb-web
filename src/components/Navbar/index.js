@@ -35,15 +35,15 @@ export const Navbar = (props) => {
 			<nav className='fixed flex w-full flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg bg-black'>
 				<div className='container px-4 mx-auto flex flex-wrap items-center justiy-between'>
 					<div className='w-full relative flex items-center justify-between'>
-						<a
+						<Link
 							className='text-lg font-bold leading-relaxed  uppercase text-white'
-							href='#'
+							to='/'
 						>
 							Atom Bomb
-						</a>
+						</Link>
 						<div className='flex space-x-2 justify-between items-center'>
-							<button type='button' className='border rounded-md p-2 text-white'>Login</button>
-							<button type='button' className='border rounded-md p-2 text-white'>Signup</button>
+							<Link to='/login' className='border rounded-md p-2 text-white'>Login</Link>
+							<Link to='signup' className='border rounded-md p-2 text-white'>Signup</Link>
 						</div>
 					</div>
 				</div>

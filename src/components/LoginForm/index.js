@@ -12,7 +12,7 @@ export const LoginForm = () => {
 	// const [ alert, setAlert ] = useState({ message: '', severity: '', open: false });
 
 	const dispatch = useDispatch();
-	// const history = useHistory();
+	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
@@ -33,7 +33,7 @@ export const LoginForm = () => {
 				unwrapResult(result);
 				setEmail('');
 				setPassword('');
-				// history.push('/');
+				history.push('/dashboard');
 			} catch (err) {
 				// setAlert({
 				// 	message: err.message,

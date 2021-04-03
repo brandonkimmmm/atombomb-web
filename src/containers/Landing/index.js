@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, signupUser } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useHistory } from 'react-router';
 
 export const Landing = () => {
 	const user = useSelector(getUser);
@@ -11,6 +12,7 @@ export const Landing = () => {
 	const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
 
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
@@ -27,6 +29,7 @@ export const Landing = () => {
 				setEmail('');
 				setPassword('');
 				setPasswordConfirmation('');
+				history.push('/login');
 			}
 		} catch (err) {
 			setEmail('');
@@ -37,9 +40,9 @@ export const Landing = () => {
 	}
 
 	const renderedPage = () => {
-		// if (user.loggedIn) {
-		// 	return <Redirect to="/dashboard" />
-		// } else {
+		if (user.loggedIn) {
+			return <Redirect to="/dashboard" />
+		} else {
 			return (
 				<main className='flex flex-col h-screen'>
 					<div className='flex flex-row bg-black justify-between items-center p-12 space-x-20 h-2/3'>
@@ -85,7 +88,7 @@ export const Landing = () => {
 					</div>
 				</main>
 			)
-		// }
+		}
 	}
 
 	return renderedPage();
