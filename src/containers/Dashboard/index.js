@@ -3,9 +3,23 @@ import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 import moment from 'moment';
+import axios from '../../api';
 
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
+
+	const handleTwitterConnect = async () => {
+		try {
+			const redirectUrl = await axios.get('/twitter/connect', {
+				headers: {
+					Authorization: `Bearer ${user.token}`
+				}
+			});
+			window.location.assign(redirectUrl);
+		} catch (err) {
+			console.log(err.response.data.message)
+		}
+	}
 
 	const renderedPage = () => {
 		if (!user.token) {
@@ -22,6 +36,7 @@ export const Dashboard = () => {
 						<div className='row-span-1 col-span-1 bg-gray-200'>
 							<div>Connected Social Media</div>
 							<div>Twitter</div>
+							<div onClick={handleTwitterConnect}>Conn</div>
 						</div>
 						<div className='row-span-2 col-span-2 bg-gray-200'>
 							<div>Stats</div>
