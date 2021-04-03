@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
+import moment from 'moment';
 
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
@@ -16,8 +17,7 @@ export const Dashboard = () => {
 						<div className='row-span-1 col-span-1 flex flex-col bg-gray-200'>
 							<div>Account</div>
 							<div>Email: {user.data.email}</div>
-							<div>Member since: 9000</div>
-							<div>Account: Basic</div>
+							<div>Member Since: {moment(user.data.createdAt).format('MMM DD, YYYY')}</div>
 						</div>
 						<div className='row-span-1 col-span-1 bg-gray-200'>
 							<div>Connected Social Media</div>
