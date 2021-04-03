@@ -51,7 +51,7 @@ export const LoginForm = () => {
 			return <Redirect to="/" />
 		} else {
 			return (
-				<div className='flex flex-row justify-center'>
+				<div className='flex flex-row justify-center pt-8'>
 					<div className='flex flex-col space-y-6 items-center'>
 						<img className='w-20 object-contain h-20' src='https://www.pinclipart.com/picdir/big/526-5260657_bomb-outline-black-and-white-clip-art-at.png' />
 						<div className='text-3xl font-bold'>Atom Bomb Login</div>

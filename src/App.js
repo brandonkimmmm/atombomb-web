@@ -17,7 +17,7 @@ function App() {
 		<Router>
 			<div>
 				<Navbar />
-				<main className='pt-24'>
+				<main className='pt-16'>
 					<Switch>
 						<Route exact path="/" component={Landing} />
 						<Route exact path="/dashboard" component={Dashboard} />
