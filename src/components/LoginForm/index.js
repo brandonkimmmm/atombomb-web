@@ -9,20 +9,20 @@ export const LoginForm = () => {
 	const user = useSelector(getUser);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const [ alert, setAlert ] = useState({ message: '', severity: '', open: false });
+	// const [ alert, setAlert ] = useState({ message: '', severity: '', open: false });
 
 	const dispatch = useDispatch();
-	const history = useHistory();
+	// const history = useHistory();
 
 	const onEmailChanged = e => setEmail(e.target.value);
 	const onPasswordChanged = e => setPassword(e.target.value);
-	const onAlertClose = e => {
-		setAlert({
-			message: '',
-			severity: '',
-			open: false
-		});
-	};
+	// const onAlertClose = e => {
+	// 	setAlert({
+	// 		message: '',
+	// 		severity: '',
+	// 		open: false
+	// 	});
+	// };
 	const canLogin = [ email, password ].every(Boolean);
 
 	const onLoginClicked = async (e) => {
@@ -33,13 +33,13 @@ export const LoginForm = () => {
 				unwrapResult(result);
 				setEmail('');
 				setPassword('');
-				history.push('/');
+				// history.push('/');
 			} catch (err) {
-				setAlert({
-					message: err.message,
-					severity: 'error',
-					open: true
-				});
+				// setAlert({
+				// 	message: err.message,
+				// 	severity: 'error',
+				// 	open: true
+				// });
 				setEmail('');
 				setPassword('');
 			}
@@ -51,7 +51,38 @@ export const LoginForm = () => {
 			return <Redirect to="/" />
 		} else {
 			return (
-				'Hi'
+				<div className='flex flex-row justify-center'>
+					<div className='flex flex-col space-y-6 items-center'>
+						<img className='w-20 object-contain h-20' src='https://www.pinclipart.com/picdir/big/526-5260657_bomb-outline-black-and-white-clip-art-at.png' />
+						<div className='text-3xl font-bold'>Atom Bomb Login</div>
+						<form className='flex flex-col justify-center bg-yellow-200 p-8 border-4 border-black rounded-lg shadow-md'>
+							<input
+								type='text'
+								placeholder='email'
+								onChange={(e) => onEmailChanged(e)}
+								id='email'
+								name='email'
+								value={email}
+								className='bg-black text-white rounded-md p-4 mb-4 placeholder-white'
+							/>
+							<input
+								type='password'
+								placeholder='password'
+								onChange={(e) => onPasswordChanged(e)}
+								id='password'
+								name='password'
+								value={password}
+								className='bg-black text-white rounded-md p-4 mb-8 placeholder-white'
+							/>
+							<input
+								type='submit'
+								onClick={(e) => onLoginClicked(e)}
+								value='Login'
+								className='font-bold text-2xl bg-green-400 text-white p-2 rounded-md'
+							/>
+						</form>
+					</div>
+				</div>
 			)
 		}
 	}

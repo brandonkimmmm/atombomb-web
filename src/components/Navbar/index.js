@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, logoutUser } from '../../redux/user/userSlice';
 import { Link, useHistory } from 'react-router-dom';
+import LoginForm from '../LoginForm';
 
 export const Navbar = (props) => {
 	const [anchorEl, setAnchorEl] = useState(null);
