@@ -1,21 +1,21 @@
 import React, { Fragment } from 'react';
 import { useSelector } from 'react-redux';
-import { getUser } from '../../redux/user/userSlice';
+import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 
 export const Dashboard = () => {
-	const user = useSelector(getUser);
+	const user = useSelector(getUserInfo);
 
 	const renderedPage = () => {
-		// if (!user.loggedIn) {
-		// 	return <Redirect to="/" />
-		// } else {
+		if (!user.token) {
+			return <Redirect to="/" />
+		} else {
 			return (
 				<main className='pt-8'>
 					<div className='grid grid-rows-2 grid-flow-col gap-4 px-10'>
 						<div className='row-span-1 col-span-1 flex flex-col bg-gray-200'>
 							<div>Account</div>
-							<div>Email: Brandon</div>
+							<div>Email: {user.data.email}</div>
 							<div>Member since: 9000</div>
 							<div>Account: Basic</div>
 						</div>
@@ -52,7 +52,7 @@ export const Dashboard = () => {
 					</div>
 				</main>
 			)
-		// }
+		}
 	}
 
 	return renderedPage();

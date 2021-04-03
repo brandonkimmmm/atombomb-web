@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, signupUser } from '../../redux/user/userSlice';
+import { getUserInfo, signupUser } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useHistory } from 'react-router';
 
 export const Landing = () => {
-	const user = useSelector(getUser);
+	const user = useSelector(getUserInfo);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
@@ -40,7 +40,7 @@ export const Landing = () => {
 	}
 
 	const renderedPage = () => {
-		if (user.loggedIn) {
+		if (user.token) {
 			return <Redirect to="/dashboard" />
 		} else {
 			return (

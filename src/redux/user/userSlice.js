@@ -6,13 +6,18 @@ import {
 import axios from '../../api';
 
 export const loginUser = createAsyncThunk('user/loginUser', async ({ email, password}) => {
-	const response = await axios.post('/login', {
+	const loginResponse = await axios.post('/login', {
 		email,
 		password
 	});
+	const userResponse = await axios.get('/user', {
+		headers: {
+			Authorization: `Bearer ${loginResponse.data.token}`
+		}
+	});
 	return {
-		token: response.data.token,
-		email
+		token: loginResponse.data.token,
+		data: userResponse.data
 	}
 });
 
@@ -22,39 +27,56 @@ export const signupUser = createAsyncThunk('user/signupUser', async ({ email, pa
 		password
 	});
 	return;
-})
+});
+
+// export const getUser = createAsyncThunk(
+// 	'user/getUser',
+// 	async (_, { getState }) => {
+// 		const response = await axios.get('/user', {
+// 			headers: {
+// 				Authorization: `Bearer ${getState().token}`
+// 			}
+// 		});
+// 		return response.data;
+// 	},
+// 	{
+// 		condition: (_, { getState }) => {
+// 			const { token, data } = getState();
+// 			if (!token) return false;
+// 			if (data) return false;
+// 		}
+// 	}
+// );
 
 const initialState = {
-	loggedIn: false,
-	token: '',
-	email: ''
-}
+	token: null,
+	data: null
+};
 
 const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
 		logoutUser(state, action) {
-			state.loggedIn = false;
-			state.email = '';
-			state.password = '';
-			state.token = '';
+			state.token = null;
+			state.data = null;
 		}
 	},
 	extraReducers: {
 		[loginUser.fulfilled]: (state, action) => {
-			const { email, token } = action.payload;
+			const { token, data } = action.payload;
 			state.token = token;
-			state.email = email;
-			state.loggedIn = true;
-		}
+			state.data = data;
+		},
+		// [getUser.fulfilled]: (state, action) => {
+		// 	const data = action.payload;
+		// 	state.data = data;
+		// }
 	}
 })
 
 export const { logoutUser } = userSlice.actions;
 
-export const userLoggedIn = state => state.user.loggedIn;
-
-export const getUser = state => state.user;
+export const getUserInfo = state => state.user;
 
 export default userSlice.reducer;

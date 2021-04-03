@@ -2,13 +2,13 @@
 import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { signupUser, getUser } from '../../redux/user/userSlice';
+import { signupUser, getUserInfo } from '../../redux/user/userSlice';
 import { useHistory } from 'react-router';
 import { Redirect, Link } from 'react-router-dom';
 
 export const SignupForm = () => {
 
-	const user = useSelector(getUser);
+	const user = useSelector(getUserInfo);
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ passwordConfirmation, setPasswordConfirmation ] = useState('');
@@ -61,7 +61,7 @@ export const SignupForm = () => {
 	}
 
 	const renderedForm = () => {
-		if (user.loggedIn) {
+		if (user.token) {
 			return <Redirect to="/" />
 		} else {
 			return (

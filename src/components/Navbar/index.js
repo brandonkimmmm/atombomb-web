@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUser, logoutUser } from '../../redux/user/userSlice';
+import { getUserInfo, logoutUser } from '../../redux/user/userSlice';
 import { Link, useHistory } from 'react-router-dom';
 import LoginForm from '../LoginForm';
 
@@ -9,7 +9,7 @@ export const Navbar = (props) => {
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 	const open = Boolean(anchorEl);
 
-	const user = useSelector(getUser);
+	const user = useSelector(getUserInfo);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
@@ -31,7 +31,7 @@ export const Navbar = (props) => {
 	};
 
 	const renderNavButtons = () => {
-		if (user.loggedIn) {
+		if (user.token) {
 			return (
 				<div className='flex space-x-2 justify-between items-center'>
 					<div onClick={handleLogout} className='border rounded-md p-2 text-white cursor-pointer'>Logout</div>
