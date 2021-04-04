@@ -10,12 +10,12 @@ export const Dashboard = () => {
 
 	const handleTwitterConnect = async () => {
 		try {
-			const redirectUrl = await axios.get('/twitter/connect', {
+			const response = await axios.get('/twitter/connect', {
 				headers: {
 					Authorization: `Bearer ${user.token}`
 				}
 			});
-			window.location.assign(redirectUrl);
+			window.location.assign(response.data.redirectUrl);
 		} catch (err) {
 			console.log(err.response.data.message)
 		}
