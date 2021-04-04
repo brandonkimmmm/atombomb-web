@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
@@ -7,6 +7,7 @@ import axios from '../../api';
 
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
+	const [tasks, setTasks] = useState(null);
 
 	const handleTwitterConnect = async () => {
 		try {
@@ -20,6 +21,25 @@ export const Dashboard = () => {
 			console.log(err.response.data.message)
 		}
 	}
+
+	useEffect(() => {
+		const fetchTasks = async () => {
+			if (user.token) {
+				try {
+					const response = await axios.get('/tasks', {
+						headers: {
+							Authorization: `Bearer ${user.token}`
+						}
+					});
+					console.log(response.data)
+					setTasks(response.data);
+				} catch (err) {
+					console.log(err.response.data.message);
+				}
+			}
+		}
+		fetchTasks();
+	}, [user])
 
 	const renderedPage = () => {
 		if (!user.token) {
@@ -35,8 +55,10 @@ export const Dashboard = () => {
 						</div>
 						<div className='row-span-1 col-span-1 bg-gray-200'>
 							<div>Connected Social Media</div>
-							<div>Twitter</div>
-							<div onClick={handleTwitterConnect}>Conn</div>
+							{user.data.Twitter.id
+								? <div>Twitter</div>
+								: <div onClick={handleTwitterConnect}>Connect your Twitter</div>
+							}
 						</div>
 						<div className='row-span-2 col-span-2 bg-gray-200'>
 							<div>Stats</div>
@@ -57,11 +79,16 @@ export const Dashboard = () => {
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>Hello</td>
-									<td>There</td>
-									<td>Yo</td>
-								</tr>
+								{tasks
+									? tasks.data.map((task) => (
+										<tr key={task.id}>
+											<td>{task.description}</td>
+											<td>{moment(task.deadline).format('LLL')}</td>
+											<td>{task.bomb.twitter.notification}</td>
+										</tr>
+									))
+									: null
+								}
 							</tbody>
 						</table>
 					</div>
