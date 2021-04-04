@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
@@ -8,6 +8,7 @@ import axios from '../../api';
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
 	const [tasks, setTasks] = useState(null);
+	const [stats, setStats] = useState(null);
 
 	const handleTwitterConnect = async () => {
 		try {
@@ -26,20 +27,39 @@ export const Dashboard = () => {
 		const fetchTasks = async () => {
 			if (user.token) {
 				try {
-					const response = await axios.get('/tasks', {
+					const tasksResponse = await axios.get('/user/tasks', {
 						headers: {
 							Authorization: `Bearer ${user.token}`
 						}
 					});
-					console.log(response.data)
-					setTasks(response.data);
+
+					const statsResponse = await axios.get('/user/stats', {
+						headers: {
+							Authorization: `Bearer ${user.token}`
+						}
+					});
+
+					setTasks(tasksResponse.data);
+					console.log(tasksResponse.data)
+					setStats(statsResponse.data);
 				} catch (err) {
+					console.log(err)
 					console.log(err.response.data.message);
 				}
 			}
 		}
 		fetchTasks();
 	}, [user])
+
+	const taskStatus = (task) => {
+		if (task.completed) {
+			return 'Successful';
+		} else if (task.expired) {
+			return 'Failed';
+		} else {
+			return 'Active';
+		}
+	}
 
 	const renderedPage = () => {
 		if (!user.token) {
@@ -62,7 +82,16 @@ export const Dashboard = () => {
 						</div>
 						<div className='row-span-2 col-span-2 bg-gray-200'>
 							<div>Stats</div>
-							<div>There</div>
+							{stats
+								? (
+									<Fragment>
+										<div>Total: {stats.total}</div>
+										<div>Completed: {stats.completed}</div>
+										<div>Failed: {stats.expired}</div>
+									</Fragment>
+								)
+								: null
+							}
 						</div>
 					</div>
 					<div className='flex flex-col px-10 my-10'>
@@ -76,6 +105,7 @@ export const Dashboard = () => {
 									<th>Task</th>
 									<th>Deadline</th>
 									<th>Bomb</th>
+									<th>Status</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -85,6 +115,7 @@ export const Dashboard = () => {
 											<td>{task.description}</td>
 											<td>{moment(task.deadline).format('LLL')}</td>
 											<td>{task.bomb.twitter.notification}</td>
+											<td>{taskStatus(task)}</td>
 										</tr>
 									))
 									: null
