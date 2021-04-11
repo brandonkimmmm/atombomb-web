@@ -4,6 +4,7 @@ import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 import moment from 'moment';
 import axios from '../../api';
+import { Pie } from 'react-chartjs-2';
 
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
@@ -40,7 +41,7 @@ export const Dashboard = () => {
 					});
 
 					setTasks(tasksResponse.data);
-					console.log(tasksResponse.data)
+					console.log(statsResponse.data)
 					setStats(statsResponse.data);
 				} catch (err) {
 					console.log(err)
@@ -61,37 +62,61 @@ export const Dashboard = () => {
 		}
 	}
 
+	const tasksChartData = () => {
+		if (stats && (stats.completed || stats.expired)) {
+			return {
+				labels: [
+					'Successful',
+					'Failed'
+				],
+				datasets: [{
+					data: [stats.completed, stats.expired],
+					backgroundColor: [
+						'green',
+						'red'
+					],
+					hoverBackgroundColor: [
+						'green',
+						'red'
+					]
+				}]
+			}
+		} else {
+			return {
+				labels: [
+					'No Data'
+				],
+				datasets: [{
+					data: [1],
+					backgroundColor: [
+						'grey'
+					]
+				}]
+			}
+		}
+	}
+
 	const renderedPage = () => {
 		if (!user.token) {
 			return <Redirect to="/" />
 		} else {
 			return (
-				<main className='pt-8'>
+				<main className='pt-8 max-w-7xl items-center m-auto'>
 					<div className='grid grid-rows-2 grid-flow-col gap-4 px-10'>
-						<div className='row-span-1 col-span-1 flex flex-col bg-gray-200'>
-							<div>Account</div>
+						<div className='row-span-1 col-span-1 flex flex-col bg-gray-200 rounded-lg p-3 space-y-2'>
 							<div>Email: {user.data.email}</div>
 							<div>Member Since: {moment(user.data.createdAt).format('MMM DD, YYYY')}</div>
 						</div>
-						<div className='row-span-1 col-span-1 bg-gray-200'>
-							<div>Connected Social Media</div>
+						<div className='row-span-1 col-span-1 bg-gray-200 rounded-lg p-3 space-y-2'>
+							<div>Connected Social Media:</div>
 							{user.data.Twitter.id
 								? <div>Twitter</div>
 								: <div onClick={handleTwitterConnect}>Connect your Twitter</div>
 							}
 						</div>
-						<div className='row-span-2 col-span-2 bg-gray-200'>
-							<div>Stats</div>
-							{stats
-								? (
-									<Fragment>
-										<div>Total: {stats.total}</div>
-										<div>Completed: {stats.completed}</div>
-										<div>Failed: {stats.expired}</div>
-									</Fragment>
-								)
-								: null
-							}
+						<div className='row-span-2 col-span-2 bg-gray-200 rounded-lg p-3 space-y-2 overflow-auto'>
+							<div>Stats:</div>
+							<Pie data={tasksChartData()} options={{ responsive: true, maintainAspectRatio: true }} />
 						</div>
 					</div>
 					<div className='flex flex-col px-10 my-10'>
