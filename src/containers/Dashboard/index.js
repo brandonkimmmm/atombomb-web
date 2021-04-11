@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getUserInfo } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
@@ -41,7 +41,6 @@ export const Dashboard = () => {
 					});
 
 					setTasks(tasksResponse.data);
-					console.log(statsResponse.data)
 					setStats(statsResponse.data);
 				} catch (err) {
 					console.log(err)
@@ -124,23 +123,23 @@ export const Dashboard = () => {
 							<div>Tasks</div>
 							<div>Create</div>
 						</div>
-						<table>
-							<thead>
+						<table className='table w-full rounded-lg'>
+							<thead className=''>
 								<tr>
-									<th>Task</th>
-									<th>Deadline</th>
-									<th>Bomb</th>
-									<th>Status</th>
+									<th className='border bg-black text-left text-white'>Task</th>
+									<th className='border bg-black text-left text-white'>Deadline</th>
+									<th className='border bg-black text-left text-white'>Bomb</th>
+									<th className='border bg-black text-left text-white'>Status</th>
 								</tr>
 							</thead>
 							<tbody>
 								{tasks
 									? tasks.data.map((task) => (
 										<tr key={task.id}>
-											<td>{task.description}</td>
-											<td>{moment(task.deadline).format('LLL')}</td>
-											<td>{task.bomb.twitter.notification}</td>
-											<td>{taskStatus(task)}</td>
+											<td className='border'>{task.description}</td>
+											<td className='border'>{moment(task.deadline).format('LLL')}</td>
+											<td className='border'>{task.bomb.twitter.notification}</td>
+											<td className='border'>{taskStatus(task)}</td>
 										</tr>
 									))
 									: null
