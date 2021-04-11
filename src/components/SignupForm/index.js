@@ -40,14 +40,11 @@ export const SignupForm = () => {
 				} else {
 					const result = await dispatch(signupUser({ email, password }));
 					unwrapResult(result);
-					setEmail('');
-					setPassword('');
-					setPasswordConfirmation('');
 					history.push('/login');
 					// history.push('/signup/complete');
 				}
 			} catch (err) {
-				console.log(err) 
+				console.log(err)
 				// setAlert({
 				// 	message: err.message,
 				// 	severity: 'error',

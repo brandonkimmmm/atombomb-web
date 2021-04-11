@@ -31,8 +31,6 @@ export const LoginForm = () => {
 			try {
 				const result = await dispatch(loginUser({ email, password }));
 				unwrapResult(result);
-				setEmail('');
-				setPassword('');
 				history.push('/dashboard');
 			} catch (err) {
 				// setAlert({
