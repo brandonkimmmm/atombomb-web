@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import moment from 'moment';
 import axios from '../../api';
 import { Pie } from 'react-chartjs-2';
+import { TASK_STATUS } from '../../constants';
 
 export const Dashboard = () => {
 	const user = useSelector(getUserInfo);
@@ -51,25 +52,25 @@ export const Dashboard = () => {
 		fetchTasks();
 	}, [user])
 
-	const taskStatus = (task) => {
-		if (task.completed) {
-			return 'Successful';
-		} else if (task.expired) {
-			return 'Failed';
-		} else {
+	const taskStatus = (status) => {
+		if (status === 0) {
 			return 'Active';
+		} else if (status === -1) {
+			return 'Failed';
+		} else if (status === 1) {
+			return 'Successful';
 		}
 	}
 
 	const tasksChartData = () => {
-		if (stats && (stats.completed || stats.expired)) {
+		if (stats && (stats.successful || stats.failed)) {
 			return {
 				labels: [
 					'Successful',
 					'Failed'
 				],
 				datasets: [{
-					data: [stats.completed, stats.expired],
+					data: [stats.successful, stats.failed],
 					backgroundColor: [
 						'green',
 						'red'
@@ -139,7 +140,7 @@ export const Dashboard = () => {
 											<td className='border'>{task.description}</td>
 											<td className='border'>{moment(task.deadline).format('LLL')}</td>
 											<td className='border'>{task.bomb.twitter.notification}</td>
-											<td className='border'>{taskStatus(task)}</td>
+											<td className='border'>{taskStatus(task.status)}</td>
 										</tr>
 									))
 									: null
