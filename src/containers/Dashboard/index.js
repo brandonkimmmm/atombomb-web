@@ -137,7 +137,7 @@ export const Dashboard = () => {
 								{tasks
 									? tasks.data.map((task) => (
 										<tr key={task.id}>
-											<td className='border'>{task.description}</td>
+											<td className='border'>{task.action}</td>
 											<td className='border'>{moment(task.deadline).format('LLL')}</td>
 											<td className='border'>{task.bomb.twitter.notification}</td>
 											<td className='border'>{taskStatus(task.status)}</td>
