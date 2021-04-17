@@ -109,7 +109,7 @@ export const Dashboard = () => {
 						</div>
 						<div className='row-span-1 col-span-1 bg-gray-200 rounded-lg p-3 space-y-2'>
 							<div>Connected Social Media:</div>
-							{user.data.Twitter.id
+							{user.data.twitter.id
 								? <div>Twitter</div>
 								: <div onClick={handleTwitterConnect}>Connect your Twitter</div>
 							}

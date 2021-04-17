@@ -17,7 +17,7 @@ function App() {
 		<Router>
 			<div>
 				<Navbar />
-				<main className='pt-16'>
+				<main className='py-16 bg-gradient-to-br from-gray-900 to-gray-700 h-full'>
 					<Switch>
 						<Route exact path="/" component={Landing} />
 						<Route exact path="/dashboard" component={Dashboard} />
