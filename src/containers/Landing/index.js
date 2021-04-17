@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfo, signupUser } from '../../redux/user/userSlice';
+import { getUserInfo, signupUser, getUser } from '../../redux/user/userSlice';
 import { Redirect } from 'react-router';
 import { unwrapResult } from '@reduxjs/toolkit';
 import { useHistory } from 'react-router';
@@ -25,27 +25,29 @@ export const Landing = () => {
 	useEffect(() => {
 		if (user.token) {
 			const fetchTasks = async () => {
-				if (user.token) {
-					try {
-						const tasksResponse = await axios.get('/user/tasks', {
-							headers: {
-								Authorization: `Bearer ${user.token}`
-							},
-							params: {
-								status: TASK_STATUS.ACTIVE
-							}
-						});
+				try {
+					const getUserResult = await dispatch(getUser());
+					unwrapResult(getUserResult);
 
-						setTasks(tasksResponse.data);
-					} catch (err) {
-						console.log(err)
-						console.log(err.response.data.message);
-					}
+					const tasksResponse = await axios.get('/user/tasks', {
+						headers: {
+							Authorization: `Bearer ${user.token}`
+						},
+						params: {
+							status: TASK_STATUS.ACTIVE
+						}
+					});
+
+					setTasks(tasksResponse.data);
+				} catch (err) {
+					console.log(err)
+					console.log(err.response.data.message);
 				}
 			}
+
 			fetchTasks();
 		}
-	}, [user])
+	}, [user.token])
 
 	const onSignupClicked = async (e) => {
 		e.preventDefault();
@@ -65,6 +67,19 @@ export const Landing = () => {
 			setPassword('');
 			setPasswordConfirmation('');
 			console.log(err);
+		}
+	}
+
+	const onTwitterConnect = async () => {
+		try {
+			const response = await axios.get('/twitter/connect', {
+				headers: {
+					Authorization: `Bearer ${user.token}`
+				}
+			});
+			window.location.assign(response.data.redirectUrl);
+		} catch (err) {
+			console.log(err.response.data.message)
 		}
 	}
 
@@ -122,7 +137,10 @@ export const Landing = () => {
 						You don't have your twitter connected yet!
 					</div>
 					<div className='grid grid-rows-3 grid-cols-3 grid-flow-col gap-4 h-1/2'>
-						<div className='col-start-2 col-span-1 flex flex-col bg-blue-300 bg-opacity-60 hover:bg-opacity-100 rounded-lg p-3 space-y-2 justify-center cursor-pointer shadow-md'>
+						<div
+							className='col-start-2 col-span-1 flex flex-col bg-blue-300 bg-opacity-60 hover:bg-opacity-100 rounded-lg p-3 space-y-2 justify-center cursor-pointer shadow-md'
+							onClick={onTwitterConnect}
+						>
 							<img className='object-scale-down h-20 select-none' src='https://cdn0.iconfinder.com/data/icons/eon-social-media-contact-info-2/32/twitter_bird_social_media_trending-256.png' />
 						</div>
 					</div>
@@ -154,7 +172,7 @@ export const Landing = () => {
 
 	return (
 		<main className='flex flex-col h-screen w-full p-12'>
-			{user.token
+			{user.token && user.data
 				? userHomePage()
 				: homePage()
 			}

@@ -5,19 +5,26 @@ import {
 
 import axios from '../../api';
 
-export const loginUser = createAsyncThunk('user/loginUser', async ({ email, password}) => {
+export const loginUser = createAsyncThunk('user/loginUser', async ({ email, password }) => {
 	const loginResponse = await axios.post('/login', {
 		email,
 		password
 	});
-	const userResponse = await axios.get('/user', {
-		headers: {
-			Authorization: `Bearer ${loginResponse.data.token}`
-		}
-	});
-	return {
-		token: loginResponse.data.token,
-		data: userResponse.data
+
+	return loginResponse.data.token;
+});
+
+export const getUser = createAsyncThunk('user/getUser', async (_, { getState }) => {
+	const { token } = getState().user;
+	if (token) {
+		const userResponse = await axios.get('/user', {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
+		return userResponse.data;
+	} else {
+		return null;
 	}
 });
 
@@ -64,14 +71,13 @@ const userSlice = createSlice({
 	},
 	extraReducers: {
 		[loginUser.fulfilled]: (state, action) => {
-			const { token, data } = action.payload;
+			const token = action.payload;
 			state.token = token;
-			state.data = data;
 		},
-		// [getUser.fulfilled]: (state, action) => {
-		// 	const data = action.payload;
-		// 	state.data = data;
-		// }
+		[getUser.fulfilled]: (state, action) => {
+			const data = action.payload;
+			state.data = data;
+		}
 	}
 })
 
